@@ -1,64 +1,107 @@
 # SecureAccess API
-
-Node.js and Express backend API with MongoDB Atlas, JWT authentication, and RBAC (admin and user roles).
-
+- Backend REST API built with Node.js and Express demonstrating secure authentication and Role-Based Access Control (RBAC).
+- This project implements JWT authentication, role-based authorization (admin and user roles), and a modular MVC architecture using MongoDB Atlas.
+## Features
+- JWT-based authentication (register and login)
+- Password hashing using bcrypt
+- Role-Based Access Control (admin and user roles)
+- Admin-only endpoints for user management
+- Route-level authorization middleware
+- Modular MVC architecture (models, controllers, middleware, routes)
+- Security middleware (Helmet, rate limiting)
+- MongoDB Atlas integration with indexed queries
 ## Tech Stack
-Node.js
-Express
-MongoDB Atlas
-Mongoose
-JWT
-bcrypt
-Helmet
-Rate limiting
-
+- Node.js
+- Express
+- MongoDB Atlas
+- Mongoose
+- JWT
+- bcrypt
+- Helmet
+- express-rate-limit
+## Project Structure
+secureaccess-api/
+├── src/
+│ ├── config/
+│ ├── controllers/
+│ ├── middleware/
+│ ├── models/
+│ ├── routes/
+│ └── server.js
+├── .gitignore
+├── package.json
+└── README.md
 ## Setup
-1. Install dependencies
-   npm install
-
-2. Create a .env file in the project root
-
-## Environment Variables
+### 1. Install dependencies
+```bash
+npm install
+```
+### 2. Create a .env file in the project root
+```env
 PORT=5000
-MONGO_URI=your_mongodb_atlas_connection_string
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret
 JWT_EXPIRES_IN=7d
-
-## Run
+```
+### 3. Run server
+```bash
 npm run dev
+```
+Server runs at: http://localhost:5000
+## API Endpoints
+### Health Check
+`GET /health`
+## Authentication
+### 1. Register
+`POST /api/auth/register`
 
-## Endpoints
-http://localhost:5000/health
+Request Body:
+```json
+{
+  "name" : "user",
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+### 2. Login
+`POST /api/auth/login`
 
-### Auth
-POST /api/auth/register
-Body: { "email": "...", "password": "..." }
+Returns JWT token.
+## Protected Routes
+All protected routes require this header:
 
-POST /api/auth/login
-Body: { "email": "...", "password": "..." }
+Authorization: Bearer <token>
+### Get Profile
+`GET /api/profile`
 
-### Protected
-GET /api/profile
-Header: Authorization: Bearer token
+Accessible by any authenticated user.
+### Admin Dashboard
+`GET /api/admin`
 
-GET /api/admin
-Header: Authorization: Bearer token
-Admin role required
+Admin role required.
+## Admin Management
+### List All Users
 
-### Admin Management
-GET /api/admin/users
-Header: Authorization: Bearer token
-Admin role required
+`GET /api/admin/users`
 
-PATCH /api/admin/users/:id/role
-Header: Authorization: Bearer token
-Body: { "role": "admin" } or { "role": "user" }
+Admin role required.
+### Update User Role
+`PATCH /api/admin/users/:id/role`
 
+Request Body:
+```json
+{
+"role": "admin"
+}
+```
+Allowed values:
+- "admin"
+- "user"
 ## Testing
-Use Thunder Client in VS Code.
-1. Register a user
-2. Login to get JWT token
-3. Add Authorization header as Bearer token to call protected routes
-
-## Notes
-To make a user admin, update the user's role field in MongoDB Atlas to "admin", then login again to get a new token.
+Use Thunder Client or Postman:
+- Register a user
+- Login to receive JWT token
+- Add Authorization header
+- Access protected endpoints
+## License
+This project was built for educational and portfolio purposes.
