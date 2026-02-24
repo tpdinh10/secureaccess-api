@@ -1,6 +1,7 @@
 # SecureAccess API
-- Backend REST API built with Node.js and Express demonstrating secure authentication and Role-Based Access Control (RBAC).
-- This project implements JWT authentication, role-based authorization (admin and user roles), and a modular MVC architecture using MongoDB Atlas.
+Backend REST API built with Node.js and Express demonstrating secure authentication and Role-Based Access Control (RBAC).  
+
+Implements JWT authentication, role-based authorization (admin and user roles), and a modular MVC architecture using MongoDB Atlas.
 ## Features
 - JWT-based authentication (register and login)
 - Password hashing using bcrypt
@@ -20,17 +21,19 @@
 - Helmet
 - express-rate-limit
 ## Project Structure
+```text
 secureaccess-api/
 ├── src/
-│ ├── config/
-│ ├── controllers/
-│ ├── middleware/
-│ ├── models/
-│ ├── routes/
-│ └── server.js
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   └── server.js
 ├── .gitignore
 ├── package.json
 └── README.md
+```
 ## Setup
 ### 1. Install dependencies
 ```bash
@@ -47,7 +50,7 @@ JWT_EXPIRES_IN=7d
 ```bash
 npm run dev
 ```
-Server runs at: http://localhost:5000
+Server runs at: `http://localhost:5000`
 ## API Endpoints
 ### Health Check
 `GET /health`
@@ -58,7 +61,6 @@ Server runs at: http://localhost:5000
 Request Body:
 ```json
 {
-  "name" : "user",
   "email": "user@example.com",
   "password": "password123"
 }
@@ -70,22 +72,22 @@ Returns JWT token.
 ## Protected Routes
 All protected routes require this header:
 
-Authorization: Bearer <token>
-### Get Profile
+`Authorization: Bearer <token>`
+### 1. Get Profile
 `GET /api/profile`
 
 Accessible by any authenticated user.
-### Admin Dashboard
+### 2. Admin Dashboard
 `GET /api/admin`
 
 Admin role required.
 ## Admin Management
-### List All Users
+### 1. List All Users
 
 `GET /api/admin/users`
 
 Admin role required.
-### Update User Role
+### 2. Update User Role
 `PATCH /api/admin/users/:id/role`
 
 Request Body:
